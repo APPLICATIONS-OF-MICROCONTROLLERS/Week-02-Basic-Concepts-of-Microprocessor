@@ -1,0 +1,34 @@
+ลำดับขั้นตอนการทำงาน (ตามผังภาพ):
+
+1. Instruction ถูกดึงเข้ามา (Fetch)
+ • ตัว instruction ถูกแบ่งออกเป็น: op, rs, rt, immediate
+ • op คือ opcode บอกว่าเป็นคำสั่งประเภทใด (load/store)
+ • rs = r2 → ใช้เป็น base register
+ • rt = r1 → register ปลายทาง
+ • immediate = -3 → offset สำหรับ address
+
+⸻
+
+2. Register File อ่านค่า
+ • อ่านค่าใน r2 ออกมาเป็น Read data 1
+ • r2 จะถูกนำไปใช้ในขั้นตอน address calculation
+ • immediate (-3) จะถูกขยาย (sign-extend) จาก 16 bit → 32 bit
+
+⸻
+
+3. ALU คำนวณ Address
+ • ALU คำนวณ: r2 + (-3)
+ • ผลลัพธ์จะกลายเป็น address ของ memory ที่จะเข้าไปอ่านข้อมูล
+
+⸻
+
+4. Memory Read
+ • Address ที่ได้จาก ALU จะใช้เข้าไปใน Data Memory
+ • MemRead = 1 เพื่อสั่งอ่านจาก memory
+ • ค่า M[r2 - 3] จะถูกส่งออกมา
+ 
+⸻
+
+5. Write Back
+ • ข้อมูลที่ได้จาก memory จะถูกนำไปเขียนเก็บลงใน r1
+ • RegWrite = 1 เพื่อเขียนกลับเข้า register file
