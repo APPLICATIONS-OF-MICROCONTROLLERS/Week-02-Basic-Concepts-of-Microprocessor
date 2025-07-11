@@ -1,0 +1,24 @@
+อธิบายการทำงานของคำสั่ง Load-Store
+- 1. Instruction Fetch
+อินสตรักชัน r1 = M[r2 - 3] ถูกอ่านเข้ามา และแยกเป็น 3 ส่วน:
+op = คำสั่ง (load word: LW)
+rs = r2 (base register)
+rt = r1 (destination register)
+immediate = -3 (offset ที่จะนำไปบวกหรือลบกับค่าใน r2)
+- 2. Register Read
+จาก box "Registers":อ่านค่า Read register 1 (r2) → ได้ค่า base address
+ยังไม่ใช้ Read register 2 ใน load word
+เตรียมเขียนค่าไปยัง Write register (r1) ทีหลัง
+- 3. Sign Extend
+Immediate 16-bit (-3) ถูกขยายสัญญาณเป็น 32-bit เพื่อให้เข้ากับ ALU ได้
+- 4. ALU Operation
+ALU ทำการคำนวณ address:java
+คัดลอก แก้ไข ALU result = r2 + (-3)
+ผลลัพธ์นี้คือ address ที่จะใช้เข้าถึง memory
+- 5. Memory Access
+ใช้ค่า address จาก ALU:
+MemRead = เปิดใช้งาน (เพราะเป็นการโหลดข้อมูล)
+อ่านข้อมูลจาก memory ที่ตำแหน่ง r2 - 3
+- 6. Write Back
+ข้อมูลที่ได้จาก memory → เขียนกลับเข้าไปใน register r1
+(RegWrite = เปิดใช้งาน)
