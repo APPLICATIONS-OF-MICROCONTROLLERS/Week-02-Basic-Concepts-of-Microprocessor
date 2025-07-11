@@ -1,0 +1,20 @@
+	1.	Fetch Instruction (ดึงคำสั่งจาก memory)
+CPU ดึงคำสั่ง r1 = M[r2 - 3] เข้ามาทำงาน
+	2.	Decode Instruction (ถอดรหัสคำสั่ง)
+แยกออกว่า r1 เป็นรีจิสเตอร์ปลายทาง (destination register)
+r2 เป็นรีจิสเตอร์ฐาน (base register)
+-3 คือค่า offset หรือ immediate
+	3.	Read Registers (อ่านค่าจากรีจิสเตอร์)
+ไปอ่านค่าจาก r2 มาเข้าสู่ ALU (หน่วยคำนวณ)
+จากภาพคือเส้น Read data 1 (มาจาก r2) เข้าสู่ ALU
+	4.	Sign-Extend ค่า Immediate
+Immediate -3 จะถูกขยายจาก 16-bit เป็น 32-bit ผ่าน Sign Extend
+	5.	ALU Operation (คำนวณ address)
+ALU คำนวณ r2 - 3 โดยนำค่าจาก r2 มาลบกับค่า immediate ที่ขยายแล้ว
+ผลลัพธ์จะเป็น address สำหรับเข้าถึง memory
+	6.	Memory Access (อ่านข้อมูลจาก memory)
+	•	Address ที่ได้จาก ALU จะถูกส่งไปที่ Data Memory
+	•	เปิดใช้งานสัญญาณควบคุม MemRead เพื่ออ่านข้อมูลจาก memory ที่ตำแหน่งดังกล่าว
+	7.	Write Back (เขียนค่ากลับไปยังรีจิสเตอร์)
+ข้อมูลที่อ่านได้จาก memory จะถูกส่งกลับมาเก็บในรีจิสเตอร์ r1
+โดยเปิดใช้งานสัญญาณควบคุม RegWrite เพื่อเขียนค่าลงไป
